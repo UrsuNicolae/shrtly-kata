@@ -29,7 +29,7 @@ namespace ShrtLy.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ShrtLyContext>(opt => opt.UseSqlServer("Data Source=localhost;Initial Catalog=ShrtLy;Integrated Security=True"));
+            services.AddDbContext<ShrtLyContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IShorteningService, ShorteningService>();
             services.AddTransient<ILinksRepository, LinksRepository>();
             services.AddTransient<ShrtLyContext>();

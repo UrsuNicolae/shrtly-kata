@@ -9,6 +9,6 @@ namespace ShrtLy.DAL.Repositories.Interfaces
         Task<int> CreateLinkAsync(LinkEntity entity);
         Task<IEnumerable<LinkEntity>> GetAllLinksAsync();
 
-        Task<LinkEntity> GetLinkByShortNameAsync(string shortName);
+        Task<LinkEntity> GetLinkAsync(string url);
     }
 }

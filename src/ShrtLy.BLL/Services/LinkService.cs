@@ -25,7 +25,7 @@ namespace ShrtLy.BLL.Services
 
         public async Task<string> ProcessLinkAsync(string url)
         {
-            var entity = await _repository.GetLinkByShortNameAsync(url);
+            var entity = await _repository.GetLinkAsync(url);
             if (entity == null)
             {
                 
@@ -47,7 +47,7 @@ namespace ShrtLy.BLL.Services
         }
         public async Task<LinkDto> GetLinkAsync(string url)
         {
-            var entity = await _repository.GetLinkByShortNameAsync(url);
+            var entity = await _repository.GetLinkAsync(url);
             return _mapper.Map<LinkDto>(entity);
         }
     }

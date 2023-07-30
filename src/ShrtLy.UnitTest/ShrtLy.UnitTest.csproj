@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.9" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="nunit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
@@ -14,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShrtLy.Api\ShrtLy.Api.csproj" />
+    <ProjectReference Include="..\ShrtLy.BLL\ShrtLy.BLL.csproj" />
+    <ProjectReference Include="..\ShrtLy.DAL\ShrtLy.DAL.csproj" />
   </ItemGroup>
 
 </Project>

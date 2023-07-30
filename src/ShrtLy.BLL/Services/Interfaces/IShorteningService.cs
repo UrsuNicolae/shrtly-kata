@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ShrtLy.BLL.Dtos;
+﻿using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.BLL.Services.Interfaces
 {
     public interface IShorteningService
     {
-        Task<IEnumerable<LinkDto>> GetShortLinksAsync();
-        Task<string> ProcessLinkAsync(string url);
+        LinkEntity ShortLink(string url);
     }
 }

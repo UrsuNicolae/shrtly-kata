@@ -13,7 +13,7 @@ namespace ShrtLy.UnitTest
     public class ControllerTests
     {
         public LinksController controller;
-        public Mock<IShorteningService> serviceMock;
+        public Mock<ILinkService> serviceMock;
         public Mock<IMapper> mapperMock;
 
         public static List<LinkViewModel> viewModels = new List<LinkViewModel>
@@ -51,7 +51,7 @@ namespace ShrtLy.UnitTest
         [SetUp]
         public void Setup()
         {
-            serviceMock = new Mock<IShorteningService>();
+            serviceMock = new Mock<ILinkService>();
             mapperMock = new Mock<IMapper>();
             controller = new LinksController(serviceMock.Object, mapperMock.Object);
         }

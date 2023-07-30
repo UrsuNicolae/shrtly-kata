@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ShrtLy.Api.ViewModels;
 using ShrtLy.BLL.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShrtLy.Api.Controllers
@@ -12,10 +11,10 @@ namespace ShrtLy.Api.Controllers
     [ApiController]
     public class LinksController : ControllerBase
     {
-        private readonly IShorteningService _service;
+        private readonly ILinkService _service;
         private readonly IMapper _mapper;
 
-        public LinksController(IShorteningService service, IMapper mapper)
+        public LinksController(ILinkService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;

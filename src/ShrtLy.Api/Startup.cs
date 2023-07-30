@@ -49,7 +49,12 @@ namespace ShrtLy.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            if (env.IsProduction())
+            {
+                using var serviceScope = app.ApplicationServices.CreateScope();
+                var context = serviceScope.ServiceProvider.GetService<ShrtLyContext>()!;
+                context.Database.Migrate();
+            }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

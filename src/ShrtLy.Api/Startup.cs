@@ -35,7 +35,6 @@ namespace ShrtLy.Api
             services.AddTransient<ILinkService, LinkService>();
             services.AddTransient<ILinksRepository, LinksRepository>();
             services.AddTransient<IShorteningService, ShorteningService>();
-            services.AddTransient<ShrtLyContext>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();

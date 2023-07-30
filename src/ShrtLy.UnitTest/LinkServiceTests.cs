@@ -62,7 +62,7 @@ namespace ShrtLy.UnitTest
         }
 
         [Test]
-        public async Task GetShortLinksAsync_Should_ReturnMappedLinkDtos()
+        public async Task GetAllLinksAsync_Should_ReturnMappedLinkDtos()
         {
             var mockEntities = new List<LinkEntity>
             {
@@ -96,6 +96,23 @@ namespace ShrtLy.UnitTest
             _mapperMock.Setup(mapper => mapper.Map<LinkDto>(linkEntity)).Returns(expectedDto);
 
             var result = await _linkService.GetLinkAsync(inputUrl);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expectedDto.Id, result.Id);
+            Assert.AreEqual(expectedDto.Url, result.Url);
+        }
+
+        [Test]
+        public async Task GetByShortNameAsync_Should_ReturnMappedLinkDto()
+        {
+            var inputUrl = "https://example.com/page1";
+            var linkEntity = new LinkEntity { Id = 1, Url = inputUrl };
+            var expectedDto = new LinkDto { Id = 1, Url = inputUrl };
+
+            _repositoryMock.Setup(repo => repo.GetByShortNameAsync(inputUrl)).ReturnsAsync(linkEntity);
+            _mapperMock.Setup(mapper => mapper.Map<LinkDto>(linkEntity)).Returns(expectedDto);
+
+            var result = await _linkService.GetByShortNameAsync(inputUrl);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(expectedDto.Id, result.Id);

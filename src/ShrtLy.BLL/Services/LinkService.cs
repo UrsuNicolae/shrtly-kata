@@ -50,5 +50,11 @@ namespace ShrtLy.BLL.Services
             var entity = await _repository.GetLinkAsync(url);
             return _mapper.Map<LinkDto>(entity);
         }
+
+        public async Task<LinkDto> GetByShortNameAsync(string url)
+        {
+            var entity = await _repository.GetByShortNameAsync(url);
+            return _mapper.Map<LinkDto>(entity);
+        }
     }
 }

@@ -87,5 +87,31 @@ namespace ShrtLy.UnitTest
 
             Assert.IsNull(result);
         }
+
+        [Test]
+        public async Task GetGetByShortNameAsyncAsync_Should_ReturnLinkEntityIfExists()
+        {
+            var url = "https://example.com/page1";
+            var entity = new LinkEntity { ShortUrl = url };
+
+            _dbContext.Links.Add(entity);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await _linksRepository.GetByShortNameAsync(url);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(entity.Id, result.Id);
+            Assert.AreEqual(entity.Url, result.Url);
+        }
+
+        [Test]
+        public async Task GetGetByShortNameAsyncAsync_Should_ReturnNullIfLinkDoesNotExist()
+        {
+            var url = "https://example.com/nonexistent";
+
+            var result = await _linksRepository.GetByShortNameAsync(url);
+
+            Assert.IsNull(result);
+        }
     }
 }

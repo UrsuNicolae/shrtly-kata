@@ -29,6 +29,11 @@ namespace ShrtLy.DAL
             return await _context.Links.ToListAsync();
         }
 
+        public async Task<LinkEntity> GetByShortNameAsync(string url)
+        {
+            return await _context.Links.FirstOrDefaultAsync(l => l.ShortUrl == url);
+        }
+
         public async Task<LinkEntity> GetLinkAsync(string url)
         {
             return await _context.Links.FirstOrDefaultAsync(l => l.Url == url);

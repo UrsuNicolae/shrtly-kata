@@ -32,5 +32,17 @@ namespace ShrtLy.Api.Controllers
             var dtos = await _service.GetShortLinksAsync();
             return _mapper.Map<IEnumerable<LinkViewModel>>(dtos);
         }
+
+        [HttpGet("{url}")]
+        public async Task<IActionResult> RedirectAsync(string url)
+        {
+            var link = await _service.GetByShortNameAsync(url);
+            if(link == null)
+            {
+                return NotFound();
+            }
+
+            return Redirect(link.Url);
+        }
     }
 }

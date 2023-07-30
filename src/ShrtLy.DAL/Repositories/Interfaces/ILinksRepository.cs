@@ -10,5 +10,7 @@ namespace ShrtLy.DAL.Repositories.Interfaces
         Task<IEnumerable<LinkEntity>> GetAllLinksAsync();
 
         Task<LinkEntity> GetLinkAsync(string url);
+
+        Task<LinkEntity> GetByShortNameAsync(string url);
     }
 }

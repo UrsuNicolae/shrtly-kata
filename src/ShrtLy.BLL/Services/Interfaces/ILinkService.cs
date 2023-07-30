@@ -9,5 +9,7 @@ namespace ShrtLy.BLL.Services.Interfaces
         Task<IEnumerable<LinkDto>> GetShortLinksAsync();
         Task<string> ProcessLinkAsync(string url);
         Task<LinkDto> GetLinkAsync(string url);
+
+        Task<LinkDto> GetByShortNameAsync(string url);
     }
 }

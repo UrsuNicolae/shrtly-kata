@@ -1,6 +1,6 @@
 ﻿namespace ShrtLy.Api.ViewModels
 {
-    public class LinkViewModel
+    public sealed class LinkViewModel
     {
         public int Id { get; set; }
         public string Url { get; set; }

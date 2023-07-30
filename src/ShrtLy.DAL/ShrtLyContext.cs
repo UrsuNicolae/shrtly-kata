@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.DAL
 {

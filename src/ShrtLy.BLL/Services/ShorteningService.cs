@@ -1,27 +1,33 @@
-﻿using ShrtLy.DAL;
+﻿using AutoMapper;
+using ShrtLy.BLL.Dtos;
+using ShrtLy.BLL.Services.Interfaces;
+using ShrtLy.DAL.Entities;
+using ShrtLy.DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace ShrtLy.BLL
+namespace ShrtLy.BLL.Services
 {
-    public class ShorteningService : IShorteningService
+    public sealed class ShorteningService : IShorteningService
     {
-        private readonly ILinksRepository repository;
+        private readonly ILinksRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ShorteningService(ILinksRepository repository)
+        public ShorteningService(ILinksRepository repository, IMapper mapper)
         {
-            this.repository = repository;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public string ProcessLink(string url)
+        public async Task<string> ProcessLinkAsync(string url)
         {
-            var entity = this.repository.GetAllLinks().Where(x => x.Url == url).FirstOrDefault();
+            var entity = await _repository.GetLinkByShortNameAsync(url);
             if (entity == null)
             {
                 Thread.Sleep(1);//make everything unique while looping
-                long ticks = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalMilliseconds;//EPOCH
+                long ticks = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;//EPOCH
                 char[] baseChars = new char[] { '0','1','2','3','4','5','6','7','8','9',
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
             'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x'};
@@ -48,7 +54,7 @@ namespace ShrtLy.BLL
                     Url = url
                 };
 
-                repository.CreateLink(link);
+                await _repository.CreateLinkAsync(link);
 
                 return link.ShortUrl;
             }
@@ -58,23 +64,10 @@ namespace ShrtLy.BLL
             }
         }
 
-        public IEnumerable<LinkDto> GetShortLinks()
+        public async Task<IEnumerable<LinkDto>> GetShortLinksAsync()
         {
-            var dtos = repository.GetAllLinks().ToList();
-
-            List<LinkDto> viewModels = new List<LinkDto>();
-            for (int i = 0; i < dtos.Count(); i++)
-            {
-                var element = dtos.ElementAt(i);
-                viewModels.Add(new LinkDto
-                {
-                    Id = element.Id,
-                    ShortUrl = element.ShortUrl,
-                    Url = element.Url
-                });
-            }
-
-            return viewModels;
+            var entities = await _repository.GetAllLinksAsync();
+            return _mapper.Map<IEnumerable<LinkDto>>(entities);
         }
     }
 }

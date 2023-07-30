@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShrtLy.DAL
+namespace ShrtLy.DAL.Entities
 {
     public class Entity
     {

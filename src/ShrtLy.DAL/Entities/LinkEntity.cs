@@ -1,11 +1,8 @@
-﻿namespace ShrtLy.BLL
+﻿namespace ShrtLy.DAL.Entities
 {
-    public class LinkDto
+    public sealed class LinkEntity : Entity
     {
-        public int Id { get; set; }
-
         public string Url { get; set; }
-
         public string ShortUrl { get; set; }
     }
 }

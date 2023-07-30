@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShrtLy.Api.ViewModels;
-using ShrtLy.BLL;
+using ShrtLy.BLL.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShrtLy.Api.Controllers
 {
@@ -10,36 +12,26 @@ namespace ShrtLy.Api.Controllers
     [ApiController]
     public class LinksController : ControllerBase
     {
-        private readonly IShorteningService service;
+        private readonly IShorteningService _service;
+        private readonly IMapper _mapper;
 
-        public LinksController(IShorteningService service)
+        public LinksController(IShorteningService service, IMapper mapper)
         {
-            this.service = service;
+            _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public string GetShortLink(string url)
+        public Task<string> GetShortLinkAsync(string url)
         {
-            return service.ProcessLink(url);
+            return _service.ProcessLinkAsync(url);
         }
 
         [HttpGet("all")]
-        public IEnumerable<LinkViewModel> GetShortLinks()
+        public async Task<IEnumerable<LinkViewModel>> GetShortLinksAsync()
         {
-            var dtos = service.GetShortLinks();
-
-            List<LinkViewModel> viewModels = new List<LinkViewModel>();
-            for (int i = 0; i < dtos.Count(); i++)
-            {
-                var element = dtos.ElementAt(i);
-                viewModels.Add(new LinkViewModel {
-                    Id = element.Id,
-                    ShortUrl = element.ShortUrl,
-                    Url = element.Url
-                });
-            }
-
-            return viewModels;
+            var dtos = await _service.GetShortLinksAsync();
+            return _mapper.Map<IEnumerable<LinkViewModel>>(dtos);
         }
     }
 }

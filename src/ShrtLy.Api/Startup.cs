@@ -11,8 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ShrtLy.BLL;
+using ShrtLy.BLL.Services;
+using ShrtLy.BLL.Services.Interfaces;
 using ShrtLy.DAL;
+using ShrtLy.DAL.Repositories.Interfaces;
 
 namespace ShrtLy.Api
 {
@@ -33,6 +35,7 @@ namespace ShrtLy.Api
             services.AddTransient<IShorteningService, ShorteningService>();
             services.AddTransient<ILinksRepository, LinksRepository>();
             services.AddTransient<ShrtLyContext>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
         }
